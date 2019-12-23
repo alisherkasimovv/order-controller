@@ -1,4 +1,4 @@
-package uz.orders.controller;
+package uz.orders.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class MarketController {
     }
 
     @GetMapping(value = "/get/{id}")
-    public ResponseEntity<Market> getmarket(@PathVariable int id) {
+    public ResponseEntity<Market> getMarket(@PathVariable int id) {
         return new ResponseEntity<>(marketDAO.getById(id), HttpStatus.OK);
     }
 

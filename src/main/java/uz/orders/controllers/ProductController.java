@@ -1,4 +1,4 @@
-package uz.orders.controller;
+package uz.orders.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
