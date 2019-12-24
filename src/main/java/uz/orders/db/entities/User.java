@@ -30,6 +30,9 @@ public class User extends UpdateBaseEntity {
     @Column(name = "market_id")
     private int marketId;
 
+    @Column(name = "role")
+    private String role;
+
 
 
 }
