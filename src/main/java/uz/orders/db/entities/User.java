@@ -33,6 +33,8 @@ public class User extends UpdateBaseEntity {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "password")
+    private String password;
 
 
 }
