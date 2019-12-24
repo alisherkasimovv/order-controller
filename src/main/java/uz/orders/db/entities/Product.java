@@ -20,4 +20,8 @@ public class Product extends UpdateBaseEntity {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "cost")
+    private double cost;
+
 }
