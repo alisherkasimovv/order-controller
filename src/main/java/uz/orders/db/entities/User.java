@@ -27,4 +27,9 @@ public class User extends UpdateBaseEntity {
     @Column(name = "lastName")
     private String lastName;
 
+    @Column(name = "market_id")
+    private int marketId;
+
+
+
 }

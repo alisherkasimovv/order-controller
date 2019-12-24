@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class UserDAOImpl implements UserDAO {
+
     private UserRepository repository;
 
     @Autowired
@@ -30,6 +31,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getbyUsername(String username) {
         return repository.findByUsername(username);
+    }
+
+    @Override
+    public List<User> getAllByMarket(int id) {
+        return repository.getAllByMarketId(id);
     }
 
     @Override

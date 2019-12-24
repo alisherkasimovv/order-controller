@@ -2,8 +2,11 @@ package uz.orders.db.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uz.orders.collections.MarketWithUsers;
 import uz.orders.db.dao.interfaces.MarketDAO;
+import uz.orders.db.dao.interfaces.UserDAO;
 import uz.orders.db.entities.Market;
+import uz.orders.db.entities.User;
 import uz.orders.db.repos.MarketRepository;
 
 import java.util.List;
@@ -12,10 +15,12 @@ import java.util.List;
 public class MarketDAOImpl implements MarketDAO {
 
     private MarketRepository repository;
+    private UserDAO userDAO;
 
     @Autowired
-    public MarketDAOImpl(MarketRepository repository) {
+    public MarketDAOImpl(MarketRepository repository, UserDAO userDAO) {
         this.repository = repository;
+        this.userDAO = userDAO;
     }
 
 
@@ -25,8 +30,10 @@ public class MarketDAOImpl implements MarketDAO {
     }
 
     @Override
-    public Market getById(int id) {
-        return repository.findById(id);
+    public MarketWithUsers getById(int id) {
+        Market market = repository.findById(id);
+        List<User> users = userDAO.getAllByMarket(market.getId());
+        return new MarketWithUsers(market, users);
     }
 
     @Override

@@ -10,5 +10,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     List<User> findAllByDeletedFalse();
     User findById(int id);
     User findByUsername(String username);
+    List<User> getAllByMarketId(int id);
 
 }

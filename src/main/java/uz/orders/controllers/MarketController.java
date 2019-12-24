@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uz.orders.collections.MarketWithUsers;
 import uz.orders.db.dao.interfaces.MarketDAO;
 import uz.orders.db.entities.Market;
 
@@ -26,7 +27,7 @@ public class MarketController {
     }
 
     @GetMapping(value = "/get/{id}")
-    public ResponseEntity<Market> getMarket(@PathVariable int id) {
+    public ResponseEntity<MarketWithUsers> getMarket(@PathVariable int id) {
         return new ResponseEntity<>(marketDAO.getById(id), HttpStatus.OK);
     }
 

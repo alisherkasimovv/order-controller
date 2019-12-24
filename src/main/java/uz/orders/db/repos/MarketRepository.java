@@ -2,6 +2,7 @@ package uz.orders.db.repos;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import uz.orders.collections.MarketWithUsers;
 import uz.orders.db.entities.Market;
 
 import java.util.List;

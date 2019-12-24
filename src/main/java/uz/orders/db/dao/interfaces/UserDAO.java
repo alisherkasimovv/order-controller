@@ -9,6 +9,7 @@ public interface UserDAO {
     List<User>get();
     User getById(int id);
     User getbyUsername(String username);
+    List<User> getAllByMarket(int id);
     void saveUser(User user);
     void deleteById(int id);
 
