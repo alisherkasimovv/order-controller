@@ -21,7 +21,7 @@ public class Product extends UpdateBaseEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "cost")
+    @Column(name = "cost" ,nullable = false)
     private double cost;
 
 }
