@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class OrderEntity extends UpdateBaseEntity {
+public abstract class DocumentEntity extends UpdateBaseEntity {
 
     @Column(name = "reference_number", unique = true)
     private String reference;
@@ -18,7 +18,7 @@ public abstract class OrderEntity extends UpdateBaseEntity {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-    @Column(name = "customer_id")
-    private int customerId;
+    @Column(name = "user_id")
+    private int userId;
 
 }

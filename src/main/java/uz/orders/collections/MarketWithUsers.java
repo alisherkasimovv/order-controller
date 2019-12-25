@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 public class MarketWithUsers extends BaseEntity {
 
- private Market market;
- List<User>users;
+    private Market market;
+    List<User> users;
 
 }

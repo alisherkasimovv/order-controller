@@ -1,7 +1,7 @@
-package uz.orders.db.repos;
+package uz.orders.db.repos.registrars;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import uz.orders.db.entities.Income;
+import uz.orders.db.entities.registrars.Income;
 
 import java.time.LocalDateTime;
 import java.util.List;

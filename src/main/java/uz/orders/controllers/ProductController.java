@@ -35,6 +35,7 @@ public class ProductController {
         productDAO.deleteById(id);
         return HttpStatus.OK;
     }
+
     @PostMapping(value = "/save")
     public ResponseEntity<List<Product>>saveProduct(@Valid @RequestBody Product product){
         productDAO.saveProduct(product);

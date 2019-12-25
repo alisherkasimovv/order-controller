@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 import uz.orders.db.entities.base.UpdateBaseEntity;
 
 import javax.persistence.Column;
@@ -12,18 +11,23 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "db_items")
+@Table(name = "db_warehouse")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
-public class Item extends UpdateBaseEntity {
+@Getter
+public class Warehouse extends UpdateBaseEntity {
 
-    @Nullable
-    @Column(name = "product_cost")
+    @Column(name = "product_id")
+    private int productId;
+
+    @Column(name = "cost")
     private double cost;
 
-    @Column(name = "amount")
+    @Column(name = "quantity")
+    private double quantity;
+
+    @Column(name = "amount_of_money")
     private double amount;
 
 }

@@ -1,15 +1,15 @@
-package uz.orders.db.entities;
+package uz.orders.db.entities.registrars;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.orders.db.entities.base.OrderEntity;
+import org.springframework.lang.Nullable;
+import uz.orders.db.entities.base.DocumentEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "db_outcomes")
@@ -17,9 +17,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Outcome extends OrderEntity {
+public class Outcome extends DocumentEntity {
 
     @Column(name = "full_cost")
     private double cost;
+
+    @Nullable
+    @Column(name = "market_id")
+    private int marketId;
+
+    @Nullable
+    @Column(name = "linked_document_id")
+    private int linkedDocumentId;
 
 }

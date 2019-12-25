@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.orders.collections.base.BaseItemList;
-import uz.orders.db.entities.Outcome;
+import uz.orders.db.entities.Product;
+import uz.orders.db.entities.Warehouse;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class OutcomeWithItems extends BaseItemList {
+public class WarehouseWithProduct {
 
-    private Outcome outcome;
+    private Warehouse warehouse;
+    private Product product;
 
 }
