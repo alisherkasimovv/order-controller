@@ -12,12 +12,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "db_outcomes")
+@Table(name = "registrar_outcomes")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Outcome extends DocumentEntity {
+public class Outgo extends DocumentEntity {
 
     @Column(name = "full_cost")
     private double cost;

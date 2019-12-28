@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "db_orders")
+@Table(name = "registrar_orders")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

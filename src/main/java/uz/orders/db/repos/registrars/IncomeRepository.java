@@ -10,6 +10,7 @@ public interface IncomeRepository extends JpaRepository<Income, Integer> {
 
     List<Income> findAllByDeletedFalse();
     List<Income> findAllByDeletedFalseAndOrderDateBetween(LocalDateTime start, LocalDateTime end);
+    Income findById(int id);
     Income findByReference(String reference);
 
 }

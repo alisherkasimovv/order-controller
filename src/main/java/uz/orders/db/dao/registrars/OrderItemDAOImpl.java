@@ -1,7 +1,7 @@
 package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
-import uz.orders.db.dao.interfaces.OrderItemDAO;
+import uz.orders.db.dao.interfaces.registrars.OrderItemDAO;
 import uz.orders.db.entities.items.OrderItem;
 import uz.orders.db.repos.registrars.OrderItemRepository;
 
@@ -33,7 +33,8 @@ public class OrderItemDAOImpl implements OrderItemDAO {
     }
 
     @Override
-    public void deleteOrderItem(OrderItem item) {
+    public void deleteOrderItem(int id) {
+        OrderItem item = repository.getById(id);
         item.setDeleted(true);
         repository.save(item);
     }

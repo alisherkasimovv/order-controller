@@ -12,9 +12,11 @@ import java.util.List;
 public class ProductDAOImpl implements ProductDAO {
 
     private ProductRepository repository;
+    private WarehouseDAO warehouseDAO;
 
-    public ProductDAOImpl(ProductRepository repository) {
+    public ProductDAOImpl(ProductRepository repository, WarehouseDAO warehouseDAO) {
         this.repository = repository;
+        this.warehouseDAO = warehouseDAO;
     }
 
     @Override
@@ -30,6 +32,8 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public void saveProduct(Product product) {
         repository.save(product);
+        Product pr = repository.findByName(product.getName());
+        warehouseDAO.createWarehouse(pr.getId(), pr.getCost());
     }
 
     @Override

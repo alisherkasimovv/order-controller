@@ -1,4 +1,4 @@
-package uz.orders.db.dao.interfaces;
+package uz.orders.db.dao.interfaces.registrars;
 
 import uz.orders.db.entities.items.OrderItem;
 
@@ -9,6 +9,6 @@ public interface OrderItemDAO {
     List<OrderItem> getAllOrderItems();
     List<OrderItem> getAllOrderItemsByDocumentId(int id);
     void saveOrderItem(OrderItem orderItem);
-    void deleteOrderItem(OrderItem item);
+    void deleteOrderItem(int id);
 
 }

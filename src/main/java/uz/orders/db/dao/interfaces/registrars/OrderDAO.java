@@ -1,4 +1,4 @@
-package uz.orders.db.dao.interfaces;
+package uz.orders.db.dao.interfaces.registrars;
 
 import uz.orders.collections.components.OrderWithItems;
 

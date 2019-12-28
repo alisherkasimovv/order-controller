@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
-public class ItemEntity extends UpdateBaseEntity {
+public abstract class ItemEntity extends UpdateBaseEntity {
 
     @Column(name = "product_id")
     private int productId;

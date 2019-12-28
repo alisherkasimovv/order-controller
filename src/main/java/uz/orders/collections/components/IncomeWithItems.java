@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.orders.db.entities.items.IncomeItem;
 import uz.orders.db.entities.registrars.Income;
-import uz.orders.db.entities.Item;
 
 import java.util.List;
 
@@ -16,6 +16,6 @@ import java.util.List;
 public class IncomeWithItems {
 
     private Income income;
-    private List<Item> items;
+    private List<IncomeItem> items;
 
 }

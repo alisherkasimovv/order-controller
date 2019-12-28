@@ -8,6 +8,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findAllByDeletedFalse();
+    Product findByName(String name);
     Product findById(int id);
 
 }

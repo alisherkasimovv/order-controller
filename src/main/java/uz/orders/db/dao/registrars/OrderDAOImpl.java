@@ -2,8 +2,8 @@ package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
 import uz.orders.collections.components.OrderWithItems;
-import uz.orders.db.dao.interfaces.OrderDAO;
-import uz.orders.db.dao.interfaces.OrderItemDAO;
+import uz.orders.db.dao.interfaces.registrars.OrderDAO;
+import uz.orders.db.dao.interfaces.registrars.OrderItemDAO;
 import uz.orders.db.entities.items.OrderItem;
 import uz.orders.db.entities.registrars.Order;
 import uz.orders.db.repos.registrars.OrderRepository;

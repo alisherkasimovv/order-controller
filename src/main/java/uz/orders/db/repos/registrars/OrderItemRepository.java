@@ -10,5 +10,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
     List<OrderItem> findAllByDeletedFalse();
     List<OrderItem> findAllByDocumentId(int id);
     List<OrderItem> findAllByProductId(int id);
+    OrderItem getById(int id);
 
 }

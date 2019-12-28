@@ -1,18 +1,17 @@
 package uz.orders.db.dao.interfaces;
 
-import uz.orders.collections.WarehouseWithProduct;
-import uz.orders.db.entities.Item;
-import uz.orders.db.entities.Product;
+import uz.orders.db.entities.Warehouse;
 
 import java.util.List;
 
 public interface WarehouseDAO {
 
-    List<WarehouseWithProduct> getAll();
-    WarehouseWithProduct getById(int id);
-    WarehouseWithProduct getByProductId(int id);
-    void createNewWarehouseItem(Product product);
-    void saveWarehouse(Product product, Item item);
+    List<Warehouse> getAll();
+    Warehouse getById(int id);
+    Warehouse getByProductId(int id);
+    void createWarehouse(int productId, double cost);
+    void saveWarehouse(int productId, double cost, double quantity);
+    void subtractFromWarehouse(int productId, double quantity);
     void deleteWarehouse(int id);
 
 }
