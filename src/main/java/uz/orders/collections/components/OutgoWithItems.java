@@ -4,14 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.orders.db.entities.registrars.Order;
+import uz.orders.db.entities.registrars.Outgo;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-public class OrderWithItems extends ItemList {
+@Setter
+public class OutgoWithItems extends ItemList {
 
-    private Order order;
+    Outgo outgo;
 
 }

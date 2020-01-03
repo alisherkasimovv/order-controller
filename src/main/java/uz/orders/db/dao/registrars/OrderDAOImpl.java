@@ -3,10 +3,11 @@ package uz.orders.db.dao.registrars;
 import org.springframework.stereotype.Service;
 import uz.orders.collections.components.OrderWithItems;
 import uz.orders.db.dao.interfaces.registrars.OrderDAO;
-import uz.orders.db.dao.interfaces.registrars.OrderItemDAO;
-import uz.orders.db.entities.items.OrderItem;
+import uz.orders.db.dao.interfaces.registrars.ItemDAO;
+import uz.orders.db.entities.registrars.Item;
 import uz.orders.db.entities.registrars.Order;
 import uz.orders.db.repos.registrars.OrderRepository;
+import uz.orders.enums.DocumentType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,11 @@ import java.util.List;
 public class OrderDAOImpl implements OrderDAO {
 
     private OrderRepository repository;
-    private OrderItemDAO orderItemDAO;
+    private ItemDAO itemDAO;
 
-    public OrderDAOImpl(OrderRepository repository, OrderItemDAO orderItemDAO) {
+    public OrderDAOImpl(OrderRepository repository, ItemDAO itemDAO) {
         this.repository = repository;
-        this.orderItemDAO = orderItemDAO;
+        this.itemDAO = itemDAO;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class OrderDAOImpl implements OrderDAO {
 
         for (Order order : orders) {
             OrderWithItems owi = new OrderWithItems();
-            List<OrderItem> items = orderItemDAO.getAllOrderItemsByDocumentId(order.getId());
+            List<Item> items = itemDAO.getAllItemsForDocument(order.getId());
 
             owi.setOrder(order);
             owi.setItems(items);
@@ -44,19 +45,19 @@ public class OrderDAOImpl implements OrderDAO {
     public OrderWithItems getById(int id) {
         Order order = repository.findById(id);
 
-        return new OrderWithItems(
-                order,
-                orderItemDAO.getAllOrderItemsByDocumentId(order.getId())
-        );
+        OrderWithItems orderWithItems = new OrderWithItems();
+        orderWithItems.setOrder(order);
+        orderWithItems.setItems(itemDAO.getAllItemsForDocument(order.getId()));
+        return orderWithItems;
     }
 
     @Override
     public void saveOrder(OrderWithItems orderWithItems) {
         Order order = repository.save(orderWithItems.getOrder());
 
-        for (OrderItem item : orderWithItems.getItems()) {
+        for (Item item : orderWithItems.getItems()) {
             item.setDocumentId(order.getId());
-            orderItemDAO.saveOrderItem(item);
+            itemDAO.saveItem(item, DocumentType.ORDER);
         }
     }
 

@@ -4,14 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.orders.db.entities.registrars.Order;
+import uz.orders.db.entities.registrars.Item;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class OrderWithItems extends ItemList {
+public abstract class ItemList {
 
-    private Order order;
+    List<Item> items;
 
 }

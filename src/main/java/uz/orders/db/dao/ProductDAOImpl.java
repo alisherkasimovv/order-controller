@@ -33,7 +33,7 @@ public class ProductDAOImpl implements ProductDAO {
     public void saveProduct(Product product) {
         repository.save(product);
         Product pr = repository.findByName(product.getName());
-        warehouseDAO.createWarehouse(pr.getId(), pr.getCost());
+        warehouseDAO.createWarehouse(pr.getId());
     }
 
     @Override

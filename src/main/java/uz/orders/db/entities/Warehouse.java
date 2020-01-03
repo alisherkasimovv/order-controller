@@ -21,13 +21,7 @@ public class Warehouse extends UpdateBaseEntity {
     @Column(name = "product_id")
     private int productId;
 
-    @Column(name = "cost")
-    private double cost;
-
     @Column(name = "quantity")
     private double quantity;
-
-    @Column(name = "amount_of_money")
-    private double amount;
 
 }

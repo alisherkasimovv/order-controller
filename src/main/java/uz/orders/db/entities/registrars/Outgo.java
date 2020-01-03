@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "registrar_outcomes")
+@Table(name = "registrar_outgo")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

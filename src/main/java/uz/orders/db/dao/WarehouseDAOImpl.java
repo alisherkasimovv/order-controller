@@ -36,27 +36,21 @@ public class WarehouseDAOImpl implements WarehouseDAO {
     }
 
     @Override
-    public void createWarehouse(int productId, double cost) {
+    public void createWarehouse(int productId) {
         Warehouse warehouse = repository.findByProductId(productId);
         if (warehouse == null) {
             warehouse = new Warehouse();
             warehouse.setProductId(productId);
-            warehouse.setCost(cost);
             warehouse.setQuantity(0);
-            warehouse.setAmount(recalculateFullAmount(cost, 0));
-        } else {
-            warehouse.setCost(cost);
-            warehouse.setAmount(recalculateFullAmount(cost, warehouse.getQuantity()));
         }
 
         repository.save(warehouse);
     }
 
     @Override
-    public void saveWarehouse(int productId, double cost, double quantity) {
+    public void saveWarehouse(int productId, double quantity) {
         Warehouse warehouse = repository.findByProductId(productId);
         warehouse.setQuantity(warehouse.getQuantity() + quantity);
-        warehouse.setAmount(recalculateFullAmount(cost, warehouse.getQuantity()));
 
         repository.save(warehouse);
     }
@@ -64,10 +58,11 @@ public class WarehouseDAOImpl implements WarehouseDAO {
     @Override
     public void subtractFromWarehouse(int productId, double quantity) {
         Warehouse warehouse = repository.findByProductId(productId);
-        warehouse.setQuantity(warehouse.getQuantity() - quantity);
-        warehouse.setAmount(recalculateFullAmount(warehouse.getCost(), warehouse.getQuantity()));
+        if (warehouse.getQuantity() < quantity) {
+            warehouse.setQuantity(warehouse.getQuantity() - quantity);
 
-        repository.save(warehouse);
+            repository.save(warehouse);
+        }
     }
 
     @Override
