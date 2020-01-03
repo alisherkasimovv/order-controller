@@ -19,9 +19,6 @@ import javax.persistence.Table;
 @Setter
 public class Outgo extends DocumentEntity {
 
-    @Column(name = "full_cost")
-    private double cost;
-
     @Nullable
     @Column(name = "market_id")
     private int marketId;

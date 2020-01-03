@@ -60,10 +60,10 @@ public class Item extends UpdateBaseEntity {
 
     @Nullable
     @Column(name = "is_income")
-    private boolean income;
+    private boolean income = false;
 
     @Nullable
     @Column(name = "is_outgo")
-    private boolean outgo;
+    private boolean outgo = false;
 
 }
