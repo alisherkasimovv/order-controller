@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface UserDAO {
 
-    List<User>get();
+    List<User> getAll();
     User getById(int id);
-    User getbyUsername(String username);
+    User getByUsername(String username);
     List<User> getAllByMarket(int id);
     void saveUser(User user);
     void deleteById(int id);

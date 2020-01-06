@@ -23,7 +23,6 @@ public class MarketDAOImpl implements MarketDAO {
         this.userDAO = userDAO;
     }
 
-
     @Override
     public List<Market> get() {
         return repository.findAllByDeletedFalse();
@@ -38,7 +37,16 @@ public class MarketDAOImpl implements MarketDAO {
 
     @Override
     public void saveMarket(Market market) {
-        repository.save(market);
+        Market mrk = repository.findByName(market.getName());
+        if (mrk == null) {
+            repository.save(market);
+        } else {
+            if (mrk.isDeleted()) {
+                mrk.setDeleted(false);
+                mrk.setName(market.getName());
+                repository.save(mrk);
+            }
+        }
     }
 
     @Override

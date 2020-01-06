@@ -16,10 +16,6 @@ public class WarehouseDAOImpl implements WarehouseDAO {
         this.repository = repository;
     }
 
-    private double recalculateFullAmount(double cost, double quantity) {
-        return cost * quantity;
-    }
-
     @Override
     public List<Warehouse> getAll() {
         return repository.findAll();
@@ -36,7 +32,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
     }
 
     @Override
-    public void createWarehouse(int productId) {
+    public String createWarehouse(int productId) {
         Warehouse warehouse = repository.findByProductId(productId);
         if (warehouse == null) {
             warehouse = new Warehouse();
@@ -45,30 +41,36 @@ public class WarehouseDAOImpl implements WarehouseDAO {
         }
 
         repository.save(warehouse);
+
+        return "Created lot in warehouse for chosen product and it's quantity has been set to 0";
     }
 
     @Override
-    public void saveWarehouse(int productId, double quantity) {
+    public String saveWarehouse(int productId, double quantity) {
         Warehouse warehouse = repository.findByProductId(productId);
         warehouse.setQuantity(warehouse.getQuantity() + quantity);
 
         repository.save(warehouse);
+
+        return "" + warehouse.getQuantity();
     }
 
     @Override
-    public void subtractFromWarehouse(int productId, double quantity) {
+    public String subtractFromWarehouse(int productId, double quantity) {
         Warehouse warehouse = repository.findByProductId(productId);
-        if (warehouse.getQuantity() < quantity) {
+        if (warehouse.getQuantity() >= quantity) {
             warehouse.setQuantity(warehouse.getQuantity() - quantity);
 
             repository.save(warehouse);
         }
+
+        return "Cannot subtract from warehouse." +
+                " Overall quantity: " + warehouse.getQuantity() +
+                " Quantity need to be subtracted: " + quantity;
     }
 
     @Override
     public void deleteWarehouse(int id) {
-        Warehouse warehouse = repository.findById(id);
-        warehouse.setDeleted(true);
-        repository.save(warehouse);
+        repository.deleteById(id);
     }
 }

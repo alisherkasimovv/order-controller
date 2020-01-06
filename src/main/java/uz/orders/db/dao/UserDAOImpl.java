@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> get() {
+    public List<User> getAll() {
         return repository.findAllByDeletedFalse();
     }
 
@@ -29,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getbyUsername(String username) {
+    public User getByUsername(String username) {
         return repository.findByUsername(username);
     }
 
@@ -40,7 +40,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void saveUser(User user) {
-        repository.save(user);
+        User usr = repository.findByUsername(user.getUsername());
+        if (usr == null) {
+            repository.save(user);
+        } else {
+            if (usr.isDeleted()) {
+                usr.setDeleted(false);
+                usr.setUsername(user.getUsername());
+                repository.save(usr);
+            }
+        }
     }
 
     @Override

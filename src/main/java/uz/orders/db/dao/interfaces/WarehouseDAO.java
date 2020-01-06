@@ -9,9 +9,9 @@ public interface WarehouseDAO {
     List<Warehouse> getAll();
     Warehouse getById(int id);
     Warehouse getByProductId(int id);
-    void createWarehouse(int productId);
-    void saveWarehouse(int productId, double quantity);
-    void subtractFromWarehouse(int productId, double quantity);
+    String createWarehouse(int productId);
+    String saveWarehouse(int productId, double quantity);
+    String subtractFromWarehouse(int productId, double quantity);
     void deleteWarehouse(int id);
 
 }
