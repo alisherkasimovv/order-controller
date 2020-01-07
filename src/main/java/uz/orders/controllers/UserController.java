@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping(value = "/get")
     public ResponseEntity<List<User>> getAll() {
-        return new ResponseEntity<>(userDAO.get(), HttpStatus.OK);
+        return new ResponseEntity<>(userDAO.getAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/get/{id}")
@@ -39,6 +39,6 @@ public class UserController {
     @PostMapping(value = "/save")
     public ResponseEntity<List<User>> saveUser(@Valid @RequestBody User user) {
         userDAO.saveUser(user);
-        return new ResponseEntity<>(userDAO.get(), HttpStatus.OK);
+        return new ResponseEntity<>(userDAO.getAll(), HttpStatus.OK);
     }
 }
