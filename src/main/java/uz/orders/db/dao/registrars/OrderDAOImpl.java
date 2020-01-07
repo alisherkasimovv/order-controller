@@ -1,6 +1,7 @@
 package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
+import uz.orders.collections.Filter;
 import uz.orders.collections.components.OrderWithItems;
 import uz.orders.db.dao.interfaces.registrars.OrderDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
@@ -24,9 +25,15 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<OrderWithItems> getAll() {
+    public List<OrderWithItems> getAll(Filter filter) {
+        List<Order> orders;
         List<OrderWithItems> orderWithItems = new ArrayList<>();
-        List<Order> orders = repository.findAll();
+
+        if (filter == null) {
+            orders = repository.findAll();
+        } else {
+            orders = repository.findAllByOrderDateBetween(filter.getStart(), filter.getEnd());
+        }
 
         for (Order order : orders) {
             OrderWithItems owi = new OrderWithItems();

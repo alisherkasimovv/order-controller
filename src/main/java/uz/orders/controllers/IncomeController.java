@@ -3,6 +3,7 @@ package uz.orders.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uz.orders.collections.Filter;
 import uz.orders.collections.components.IncomeWithItems;
 import uz.orders.db.dao.interfaces.registrars.IncomeDAO;
 
@@ -21,7 +22,12 @@ public class IncomeController {
     
     @GetMapping(value = "/get")
     public ResponseEntity<List<IncomeWithItems>> getAll() {
-        return new ResponseEntity<>(incomeDAO.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(incomeDAO.getAll(null), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/get/filtered")
+    public ResponseEntity<List<IncomeWithItems>> getFilteredData(@Valid @RequestBody Filter filter) {
+        return new ResponseEntity<>(incomeDAO.getAll(null), HttpStatus.OK);
     }
 
     @GetMapping(value = "/get/{id}")

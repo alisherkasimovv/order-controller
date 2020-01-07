@@ -1,6 +1,7 @@
 package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
+import uz.orders.collections.Filter;
 import uz.orders.collections.components.IncomeWithItems;
 import uz.orders.db.dao.interfaces.registrars.IncomeDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
@@ -24,9 +25,14 @@ public class IncomeDAOImpl implements IncomeDAO {
     }
 
     @Override
-    public List<IncomeWithItems> getAll() {
+    public List<IncomeWithItems> getAll(Filter filter) {
         List<IncomeWithItems> incomeWithItemsList = new ArrayList<>();
-        List<Income> incomeList = repository.findAllByDeletedFalse();
+        List<Income> incomeList;
+
+        if (filter == null)
+            incomeList = repository.findAllByDeletedFalse();
+        else
+            incomeList = repository.findAllByDeletedFalseAndOrderDateBetween(filter.getStart(), filter.getEnd());
 
         for (Income income : incomeList) {
             IncomeWithItems incomeWithItems = new IncomeWithItems();
