@@ -10,7 +10,7 @@ public interface OrderDAO {
 
     List<OrderWithItems> getAll(Filter filter, boolean filterType);
     OrderWithItems getById(int id);
-    List<ItemCollection> sumUpAllOrderItems();
+    Object[] sumUpAllOrderItems();
     void saveOrder(OrderWithItems orderWithItems);
     void deleteOrder(int id);
 

@@ -2,13 +2,11 @@ package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
 import uz.orders.collections.Filter;
-import uz.orders.collections.ItemCollection;
 import uz.orders.collections.components.OrderWithItems;
 import uz.orders.db.dao.interfaces.registrars.OrderDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
 import uz.orders.db.entities.registrars.Item;
 import uz.orders.db.entities.registrars.Order;
-import uz.orders.db.repos.registrars.ItemsGetter;
 import uz.orders.db.repos.registrars.OrderRepository;
 import uz.orders.enums.DocumentType;
 
@@ -19,12 +17,10 @@ import java.util.List;
 public class OrderDAOImpl implements OrderDAO {
 
     private OrderRepository repository;
-    private ItemsGetter getter;
     private ItemDAO itemDAO;
 
-    public OrderDAOImpl(OrderRepository repository, ItemsGetter getter, ItemDAO itemDAO) {
+    public OrderDAOImpl(OrderRepository repository, ItemDAO itemDAO) {
         this.repository = repository;
-        this.getter = getter;
         this.itemDAO = itemDAO;
     }
 
@@ -71,8 +67,8 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<ItemCollection> sumUpAllOrderItems() {
-        return getter.sumUpAllOrders();
+    public Object[] sumUpAllOrderItems() {
+        return itemDAO.sumUpAllItemQuantities();
     }
 
     @Override

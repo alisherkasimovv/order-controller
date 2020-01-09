@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    List<Order> findAllOrder();
+    List<Order> findAll();
     List<Order> findAllByProvidedFalseOrderByOrderDateDesc();
     List<Order> findAllByOrderDateBetweenOrderByOrderDateDesc(LocalDateTime start, LocalDateTime end);
     List<Order> findAllByOrderDateBetweenAndProvidedFalseOrderByOrderDateDesc(LocalDateTime start, LocalDateTime end);
