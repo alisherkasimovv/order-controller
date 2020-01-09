@@ -41,7 +41,7 @@ public class OrderController {
         return new ResponseEntity<>(orderDAO.getAll(filter, false), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/get/items")
+    @GetMapping(value = "/get/items")
     public ResponseEntity<List<ItemCollection>> getSummedItems() {
         return new ResponseEntity<>(orderDAO.sumUpAllOrderItems(), HttpStatus.OK);
     }

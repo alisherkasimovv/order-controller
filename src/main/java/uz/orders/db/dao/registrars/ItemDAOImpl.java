@@ -1,7 +1,6 @@
 package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
-import uz.orders.collections.ItemCollection;
 import uz.orders.db.dao.interfaces.WarehouseDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
 import uz.orders.db.entities.registrars.Item;
@@ -39,11 +38,6 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     public List<Item> getAllOutgoItems() {
         return repository.findAllByOutgoTrue();
-    }
-
-    @Override
-    public List<ItemCollection> sumUpAllItems() {
-        return repository.sumUpAllOrders();
     }
 
     @Override

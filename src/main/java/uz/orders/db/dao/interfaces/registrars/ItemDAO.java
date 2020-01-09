@@ -12,7 +12,6 @@ public interface ItemDAO {
     List<Item> getAllOrderItems();
     List<Item> getAllIncomeItems();
     List<Item> getAllOutgoItems();
-    List<ItemCollection> sumUpAllItems();
     Item getOneItem(int id);
 
     /**
