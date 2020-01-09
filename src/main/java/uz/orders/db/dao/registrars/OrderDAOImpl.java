@@ -27,33 +27,28 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<OrderWithItems> getAll(Filter filter, boolean filterType) {
         List<Order> orders;
-        List<OrderWithItems> orderWithItems = new ArrayList<>();
 
         if (filter == null) {
             if (filterType) {
-                orders = repository.findAllByProvidedFalseOrderByOrderDateDesc();
+                orders = repository.findAllByProvidedFalseOrderByOrderDateAsc();
             } else {
                 orders = repository.findAll();
             }
         } else {
             if (filterType) {
-                orders = repository.findAllByOrderDateBetweenAndProvidedFalseOrderByOrderDateDesc(filter.getStart(), filter.getEnd());
+                orders = repository.findAllByOrderDateBetweenAndProvidedFalseOrderByOrderDateAsc(filter.getStart(), filter.getEnd());
             } else {
-                orders = repository.findAllByOrderDateBetweenOrderByOrderDateDesc(filter.getStart(), filter.getEnd());
+                orders = repository.findAllByOrderDateBetweenOrderByOrderDateAsc(filter.getStart(), filter.getEnd());
             }
         }
 
-        for (Order order : orders) {
-            OrderWithItems owi = new OrderWithItems();
-            List<Item> items = itemDAO.getAllItemsForDocument(order.getId());
+        return sortOutCollection(orders);
+    }
 
-            owi.setOrder(order);
-            owi.setItems(items);
-
-            orderWithItems.add(owi);
-        }
-
-        return orderWithItems;
+    @Override
+    public List<OrderWithItems> getAllOrdersForMarket(int marketId) {
+        List<Order> orders = repository.findAllByMarketIdAndProvidedFalseOrderByOrderDateAsc(marketId);
+        return sortOutCollection(orders);
     }
 
     @Override
@@ -84,5 +79,21 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public void deleteOrder(int id) {
 
+    }
+
+    private List<OrderWithItems> sortOutCollection(List<Order> orders) {
+        List<OrderWithItems> orderWithItems = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderWithItems owi = new OrderWithItems();
+            List<Item> items = itemDAO.getAllItemsForDocument(order.getId());
+
+            owi.setOrder(order);
+            owi.setItems(items);
+
+            orderWithItems.add(owi);
+        }
+
+        return orderWithItems;
     }
 }

@@ -46,6 +46,11 @@ public class OrderController {
         return new ResponseEntity<>(orderDAO.sumUpAllOrderItems(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/get/market/{marketId}")
+    public ResponseEntity<List<OrderWithItems>> getOrdersForSpecificMarket(@PathVariable int marketId) {
+        return new ResponseEntity<>(orderDAO.getAllOrdersForMarket(marketId), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<OrderWithItems> getById(@PathVariable int id) {
         return new ResponseEntity<>(orderDAO.getById(id), HttpStatus.OK);

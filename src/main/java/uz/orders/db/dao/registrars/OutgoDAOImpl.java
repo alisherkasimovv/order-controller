@@ -61,6 +61,5 @@ public class OutgoDAOImpl implements OutgoDAO {
 
     @Override
     public void deleteOutgo(int id) {
-
     }
 }

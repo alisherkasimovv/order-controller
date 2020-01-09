@@ -2,7 +2,6 @@ package uz.orders.db.repos.registrars;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import uz.orders.collections.ItemCollection;
 import uz.orders.db.entities.registrars.Item;
 
 import java.util.List;

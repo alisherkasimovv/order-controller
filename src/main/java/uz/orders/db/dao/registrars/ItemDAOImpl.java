@@ -25,30 +25,13 @@ public class ItemDAOImpl implements ItemDAO {
     public List<Item> getAllItemsForDocument(int documentId) {
         return repository.findAllByDocumentId(documentId);
     }
-
-    @Override
-    public List<Item> getAllOrderItems() {
-        return repository.findAllByOrderTrue();
-    }
-
-    @Override
-    public List<Item> getAllIncomeItems() {
-        return repository.findAllByIncomeTrue();
-    }
-
-    @Override
-    public List<Item> getAllOutgoItems() {
-        return repository.findAllByOutgoTrue();
-    }
-
     @Override
     public Object[] sumUpAllItemQuantities() {
+        Object[] objects = repository.sumUpAllOrders();
+        for (Object object : objects) {
+            System.out.println(object.getClass().isArray());
+        }
         return repository.sumUpAllOrders();
-    }
-
-    @Override
-    public Item getOneItem(int id) {
-        return repository.findById(id);
     }
 
     @Override

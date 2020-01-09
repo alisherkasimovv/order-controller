@@ -9,11 +9,7 @@ import java.util.List;
 public interface ItemDAO {
 
     List<Item> getAllItemsForDocument(int documentId);
-    List<Item> getAllOrderItems();
-    List<Item> getAllIncomeItems();
-    List<Item> getAllOutgoItems();
     Object[] sumUpAllItemQuantities();
-    Item getOneItem(int id);
 
     /**
      * Saving items by document type.

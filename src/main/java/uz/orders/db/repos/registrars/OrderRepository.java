@@ -9,9 +9,10 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findAll();
-    List<Order> findAllByProvidedFalseOrderByOrderDateDesc();
-    List<Order> findAllByOrderDateBetweenOrderByOrderDateDesc(LocalDateTime start, LocalDateTime end);
-    List<Order> findAllByOrderDateBetweenAndProvidedFalseOrderByOrderDateDesc(LocalDateTime start, LocalDateTime end);
+    List<Order> findAllByProvidedFalseOrderByOrderDateAsc();
+    List<Order> findAllByOrderDateBetweenOrderByOrderDateAsc(LocalDateTime start, LocalDateTime end);
+    List<Order> findAllByOrderDateBetweenAndProvidedFalseOrderByOrderDateAsc(LocalDateTime start, LocalDateTime end);
+    List<Order> findAllByMarketIdAndProvidedFalseOrderByOrderDateAsc(int marketId);
     Order findById(int id);
     Order findByReference(String reference);
 
