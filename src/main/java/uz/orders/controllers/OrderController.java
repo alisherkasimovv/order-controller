@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.orders.collections.Filter;
 import uz.orders.collections.ItemCollection;
+import uz.orders.collections.MarketWithOrders;
 import uz.orders.collections.components.OrderWithItems;
 import uz.orders.db.dao.interfaces.registrars.OrderDAO;
 
@@ -41,9 +42,9 @@ public class OrderController {
         return new ResponseEntity<>(orderDAO.getAll(filter, false), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/get/market/{marketId}")
-    public ResponseEntity<List<OrderWithItems>> getOrdersForSpecificMarket(@PathVariable int marketId) {
-        return new ResponseEntity<>(orderDAO.getAllOrdersForMarket(marketId), HttpStatus.OK);
+    @GetMapping(value = "/get/markets")
+    public ResponseEntity<List<MarketWithOrders>> getOrdersForSpecificMarket(@PathVariable int marketId) {
+        return new ResponseEntity<>(orderDAO.getAllOrdersForMarket(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/get/{id}")

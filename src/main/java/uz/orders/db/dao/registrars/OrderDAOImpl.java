@@ -2,10 +2,12 @@ package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
 import uz.orders.collections.Filter;
-import uz.orders.collections.ItemCollection;
+import uz.orders.collections.MarketWithOrders;
 import uz.orders.collections.components.OrderWithItems;
+import uz.orders.db.dao.interfaces.MarketDAO;
 import uz.orders.db.dao.interfaces.registrars.OrderDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
+import uz.orders.db.entities.Market;
 import uz.orders.db.entities.registrars.Item;
 import uz.orders.db.entities.registrars.Order;
 import uz.orders.db.repos.registrars.OrderRepository;
@@ -19,10 +21,12 @@ public class OrderDAOImpl implements OrderDAO {
 
     private OrderRepository repository;
     private ItemDAO itemDAO;
+    private MarketDAO marketDAO;
 
-    public OrderDAOImpl(OrderRepository repository, ItemDAO itemDAO) {
+    public OrderDAOImpl(OrderRepository repository, ItemDAO itemDAO, MarketDAO marketDAO) {
         this.repository = repository;
         this.itemDAO = itemDAO;
+        this.marketDAO = marketDAO;
     }
 
     @Override
@@ -47,9 +51,18 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<OrderWithItems> getAllOrdersForMarket(int marketId) {
-        List<Order> orders = repository.findAllByMarketIdAndProvidedFalseOrderByOrderDateAsc(marketId);
-        return sortOutCollection(orders);
+    public List<MarketWithOrders> getAllOrdersForMarket() {
+        List<Market> markets = marketDAO.get();
+        List<MarketWithOrders> marketWithOrders = new ArrayList<>();
+
+        for (Market market : markets) {
+            MarketWithOrders mwo = new MarketWithOrders();
+            mwo.setMarket(market);
+            mwo.setOrders(this.getForMarket(market.getId()));
+
+            marketWithOrders.add(mwo);
+        }
+        return marketWithOrders;
     }
 
     @Override
@@ -90,6 +103,19 @@ public class OrderDAOImpl implements OrderDAO {
             orderWithItems.add(owi);
         }
 
+        return orderWithItems;
+    }
+
+    private List<OrderWithItems> getForMarket(int id) {
+        List<Order> orders = repository.findAllByMarketIdAndProvidedFalseOrderByOrderDateAsc(id);
+        List<OrderWithItems> orderWithItems = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderWithItems owi = new OrderWithItems();
+            owi.setOrder(order);
+            owi.setItems(itemDAO.getAllItemsForDocument(order.getId()));
+            orderWithItems.add(owi);
+        }
         return orderWithItems;
     }
 }
