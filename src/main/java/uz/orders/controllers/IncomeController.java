@@ -27,7 +27,7 @@ public class IncomeController {
 
     @PostMapping(value = "/get/filtered")
     public ResponseEntity<List<IncomeWithItems>> getFilteredData(@Valid @RequestBody Filter filter) {
-        return new ResponseEntity<>(incomeDAO.getAll(null), HttpStatus.OK);
+        return new ResponseEntity<>(incomeDAO.getAll(filter), HttpStatus.OK);
     }
 
     @GetMapping(value = "/get/{id}")

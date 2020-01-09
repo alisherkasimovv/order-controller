@@ -2,6 +2,7 @@ package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
 import uz.orders.collections.Filter;
+import uz.orders.collections.ItemCollection;
 import uz.orders.collections.components.OrderWithItems;
 import uz.orders.db.dao.interfaces.registrars.OrderDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
@@ -25,14 +26,22 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<OrderWithItems> getAll(Filter filter) {
+    public List<OrderWithItems> getAll(Filter filter, boolean filterType) {
         List<Order> orders;
         List<OrderWithItems> orderWithItems = new ArrayList<>();
 
         if (filter == null) {
-            orders = repository.findAll();
+            if (filterType) {
+                orders = repository.findAllByProvidedFalseOrderByOrderDateDesc();
+            } else {
+                orders = repository.findAll();
+            }
         } else {
-            orders = repository.findAllByOrderDateBetween(filter.getStart(), filter.getEnd());
+            if (filterType) {
+                orders = repository.findAllByOrderDateBetweenAndProvidedFalseOrderByOrderDateDesc(filter.getStart(), filter.getEnd());
+            } else {
+                orders = repository.findAllByOrderDateBetweenOrderByOrderDateDesc(filter.getStart(), filter.getEnd());
+            }
         }
 
         for (Order order : orders) {
@@ -56,6 +65,11 @@ public class OrderDAOImpl implements OrderDAO {
         orderWithItems.setOrder(order);
         orderWithItems.setItems(itemDAO.getAllItemsForDocument(order.getId()));
         return orderWithItems;
+    }
+
+    @Override
+    public List<ItemCollection> sumUpAllOrderItems() {
+        return itemDAO.sumUpAllItems();
     }
 
     @Override

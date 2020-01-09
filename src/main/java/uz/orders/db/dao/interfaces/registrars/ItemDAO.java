@@ -1,5 +1,6 @@
 package uz.orders.db.dao.interfaces.registrars;
 
+import uz.orders.collections.ItemCollection;
 import uz.orders.db.entities.registrars.Item;
 import uz.orders.enums.DocumentType;
 
@@ -11,6 +12,7 @@ public interface ItemDAO {
     List<Item> getAllOrderItems();
     List<Item> getAllIncomeItems();
     List<Item> getAllOutgoItems();
+    List<ItemCollection> sumUpAllItems();
     Item getOneItem(int id);
 
     /**

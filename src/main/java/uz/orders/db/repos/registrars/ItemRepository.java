@@ -1,6 +1,8 @@
 package uz.orders.db.repos.registrars;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import uz.orders.collections.ItemCollection;
 import uz.orders.db.entities.registrars.Item;
 
 import java.util.List;
@@ -36,6 +38,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
      * @return java.util.List Items.
      */
     List<Item> findAllByOrderTrue();
+
+    @Query("SELECT i.productId, SUM(i.orderQuantity) AS total FROM Item i WHERE i.deleted = FALSE GROUP BY i.productId ORDER BY i.productId")
+    List<ItemCollection> sumUpAllOrders();
 
     /**
      * Searching for item by its id.
