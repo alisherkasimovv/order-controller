@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import uz.orders.collections.ItemCollection;
 import uz.orders.db.dao.interfaces.ProductDAO;
+import uz.orders.db.dao.interfaces.registrars.ItemDAO;
 import uz.orders.db.entities.Product;
 
 import javax.validation.Valid;
@@ -15,10 +17,12 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
     private ProductDAO productDAO;
+    private ItemDAO itemDAO;
 
     @Autowired
-    public ProductController(ProductDAO productDAO) {
+    public ProductController(ProductDAO productDAO, ItemDAO itemDAO) {
         this.productDAO = productDAO;
+        this.itemDAO = itemDAO;
     }
 
     @GetMapping(value = "/get")
@@ -30,6 +34,12 @@ public class ProductController {
     public ResponseEntity<Product>getProduct(@PathVariable int id){
         return new ResponseEntity<>(productDAO.getById(id),HttpStatus.OK);
     }
+
+    @GetMapping(value = "/get/order-quantities")
+    public ResponseEntity<List<ItemCollection>> getSummedItems() {
+        return new ResponseEntity<>(itemDAO.sumUpAllItemQuantities(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/delete/{id}")
     public HttpStatus deleteProduct(@PathVariable int id){
         productDAO.deleteById(id);

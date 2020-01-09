@@ -2,12 +2,15 @@ package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
 import uz.orders.collections.ItemCollection;
+import uz.orders.db.dao.interfaces.ProductDAO;
 import uz.orders.db.dao.interfaces.WarehouseDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
+import uz.orders.db.entities.Product;
 import uz.orders.db.entities.registrars.Item;
 import uz.orders.db.repos.registrars.ItemRepository;
 import uz.orders.enums.DocumentType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,23 +18,33 @@ public class ItemDAOImpl implements ItemDAO {
 
     private ItemRepository repository;
     private WarehouseDAO warehouseDAO;
+    private ProductDAO productDAO;
 
-    public ItemDAOImpl(ItemRepository repository, WarehouseDAO warehouseDAO) {
+    public ItemDAOImpl(ItemRepository repository, WarehouseDAO warehouseDAO, ProductDAO productDAO) {
         this.repository = repository;
         this.warehouseDAO = warehouseDAO;
+        this.productDAO = productDAO;
     }
 
     @Override
     public List<Item> getAllItemsForDocument(int documentId) {
         return repository.findAllByDocumentId(documentId);
     }
+
     @Override
-    public Object[] sumUpAllItemQuantities() {
-        Object[] objects = repository.sumUpAllOrders();
-        for (Object object : objects) {
-            System.out.println(object.getClass().isArray());
+    public List<ItemCollection> sumUpAllItemQuantities() {
+        List<Product> products = productDAO.get();
+        List<ItemCollection> collections = new ArrayList<>();
+
+        for (Product product : products) {
+            ItemCollection ic = new ItemCollection();
+            ic.setProduct(product);
+            ic.setTotal(repository.sumUpByProduct(product.getId()));
+
+            collections.add(ic);
         }
-        return repository.sumUpAllOrders();
+
+        return collections;
     }
 
     @Override

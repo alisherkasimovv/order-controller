@@ -2,6 +2,7 @@ package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
 import uz.orders.collections.Filter;
+import uz.orders.collections.ItemCollection;
 import uz.orders.collections.components.OrderWithItems;
 import uz.orders.db.dao.interfaces.registrars.OrderDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
@@ -59,11 +60,6 @@ public class OrderDAOImpl implements OrderDAO {
         orderWithItems.setOrder(order);
         orderWithItems.setItems(itemDAO.getAllItemsForDocument(order.getId()));
         return orderWithItems;
-    }
-
-    @Override
-    public Object[] sumUpAllOrderItems() {
-        return itemDAO.sumUpAllItemQuantities();
     }
 
     @Override
