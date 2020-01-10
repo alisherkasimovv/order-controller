@@ -1,8 +1,10 @@
 package uz.orders.db.dao.registrars;
 
 import org.springframework.stereotype.Service;
+import uz.orders.collections.components.OrderWithItems;
 import uz.orders.collections.components.OutgoWithItems;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
+import uz.orders.db.dao.interfaces.registrars.OrderDAO;
 import uz.orders.db.dao.interfaces.registrars.OutgoDAO;
 import uz.orders.db.entities.registrars.Item;
 import uz.orders.db.entities.registrars.Outgo;
@@ -16,10 +18,12 @@ import java.util.List;
 public class OutgoDAOImpl implements OutgoDAO {
 
     private OutgoRepository repository;
+    private OrderDAO orderDAO;
     private ItemDAO itemDAO;
 
-    public OutgoDAOImpl(OutgoRepository repository, ItemDAO itemDAO) {
+    public OutgoDAOImpl(OutgoRepository repository, OrderDAO orderDAO, ItemDAO itemDAO) {
         this.repository = repository;
+        this.orderDAO = orderDAO;
         this.itemDAO = itemDAO;
     }
 
@@ -50,11 +54,17 @@ public class OutgoDAOImpl implements OutgoDAO {
     }
 
     @Override
-    public void saveOutgo(OutgoWithItems outgoWithItems) {
-        Outgo outgo = repository.save(outgoWithItems.getOutgo());
+    public void saveOutgo(OrderWithItems orderWithItems) {
+        Outgo outgo = new Outgo();
+        outgo.setLinkedDocumentId(orderWithItems.getOrder().getId());
+        outgo.setMarketId(orderWithItems.getOrder().getMarketId());
+        Outgo savedOutgo = repository.save(outgo);
 
-        for (Item item : outgoWithItems.getItems()) {
+        for (Item item : orderWithItems.getItems()) {
             item.setDocumentId(outgo.getId());
+            itemDAO.saveItem(item, DocumentType.ORDER);
+
+            item.setDocumentId(savedOutgo.getId());
             itemDAO.saveItem(item, DocumentType.OUTGO);
         }
     }

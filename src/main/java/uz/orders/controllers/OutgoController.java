@@ -3,6 +3,7 @@ package uz.orders.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uz.orders.collections.components.OrderWithItems;
 import uz.orders.collections.components.OutgoWithItems;
 import uz.orders.db.dao.interfaces.registrars.OutgoDAO;
 
@@ -30,7 +31,7 @@ public class OutgoController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResponseEntity<List<OutgoWithItems>> saveOutgo(@Valid @RequestBody OutgoWithItems outgo) {
+    public ResponseEntity<List<OutgoWithItems>> saveOutgo(@Valid @RequestBody OrderWithItems outgo) {
         outgoDAO.saveOutgo(outgo);
         return new ResponseEntity<>(outgoDAO.getAll(), HttpStatus.OK);
     }

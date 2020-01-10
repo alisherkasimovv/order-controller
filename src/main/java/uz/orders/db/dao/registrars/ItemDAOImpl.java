@@ -50,10 +50,16 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     public void saveItem(Item item, DocumentType type) {
         if (type == DocumentType.ORDER){
+            // ORDER SAVE
             item.setOrder(true);
             item.setIncome(false);
             item.setOutgo(false);
+
+            item.setIncomeAmount(0);
+            item.setIncomeCost(0);
+            item.setOutgoQuantity(0);
         } else if (type == DocumentType.INCOME) {
+            // INCOME SAVE
             item.setOrder(false);
             item.setIncome(true);
             item.setOutgo(false);
@@ -64,9 +70,12 @@ public class ItemDAOImpl implements ItemDAO {
             );
 
         } else if (type == DocumentType.OUTGO) {
+            // OUTGO SAVE
             item.setOrder(false);
             item.setIncome(false);
             item.setOutgo(true);
+
+            item.setOrderQuantity(0);
 
             warehouseDAO.subtractFromWarehouse(
                     item.getProductId(),
