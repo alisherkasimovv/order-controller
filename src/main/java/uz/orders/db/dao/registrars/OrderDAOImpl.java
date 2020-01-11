@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import uz.orders.collections.Filter;
 import uz.orders.collections.MarketWithOrders;
 import uz.orders.collections.components.OrderWithItems;
+import uz.orders.configs.ReferenceGenerator;
 import uz.orders.db.dao.interfaces.MarketDAO;
 import uz.orders.db.dao.interfaces.registrars.OrderDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
@@ -13,6 +14,7 @@ import uz.orders.db.entities.registrars.Order;
 import uz.orders.db.repos.registrars.OrderRepository;
 import uz.orders.enums.DocumentType;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class OrderDAOImpl implements OrderDAO {
     private OrderRepository repository;
     private ItemDAO itemDAO;
     private MarketDAO marketDAO;
+    private int reference = 0;
 
     public OrderDAOImpl(OrderRepository repository, ItemDAO itemDAO, MarketDAO marketDAO) {
         this.repository = repository;
@@ -66,7 +69,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public OrderWithItems getById(int id) {
+    public OrderWithItems getByIdWithItems(int id) {
         Order order = repository.findById(id);
 
         OrderWithItems orderWithItems = new OrderWithItems();
@@ -76,13 +79,26 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
+    public Order getById(int id) {
+        return repository.findById(id);
+    }
+
+    @Override
     public void saveOrder(OrderWithItems orderWithItems) {
+        if (orderWithItems.getOrder().getReference() == null) {
+            orderWithItems.getOrder().setReference(makeReference(LocalDateTime.now()));
+        }
         Order order = repository.save(orderWithItems.getOrder());
 
         for (Item item : orderWithItems.getItems()) {
             item.setDocumentId(order.getId());
             itemDAO.saveItem(item, DocumentType.ORDER);
         }
+    }
+
+    @Override
+    public void saveOnlyOrder(Order order) {
+        repository.save(order);
     }
 
     @Override
@@ -117,5 +133,15 @@ public class OrderDAOImpl implements OrderDAO {
             orderWithItems.add(owi);
         }
         return orderWithItems;
+    }
+
+    private String makeReference(LocalDateTime time) {
+        ReferenceGenerator rg = new ReferenceGenerator();
+
+        if (reference == 1000) reference = 0;
+        rg.setReference(reference);
+        ++reference;
+
+        return rg.generateReferenceNumber(time, "O");
     }
 }

@@ -3,6 +3,7 @@ package uz.orders.db.dao.registrars;
 import org.springframework.stereotype.Service;
 import uz.orders.collections.Filter;
 import uz.orders.collections.components.IncomeWithItems;
+import uz.orders.configs.ReferenceGenerator;
 import uz.orders.db.dao.interfaces.registrars.IncomeDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
 import uz.orders.db.entities.registrars.Income;
@@ -10,6 +11,7 @@ import uz.orders.db.entities.registrars.Item;
 import uz.orders.db.repos.registrars.IncomeRepository;
 import uz.orders.enums.DocumentType;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class IncomeDAOImpl implements IncomeDAO {
 
     private IncomeRepository repository;
     private ItemDAO itemDAO;
+    private int reference = 0;
 
     public IncomeDAOImpl(IncomeRepository repository, ItemDAO itemDAO) {
         this.repository = repository;
@@ -55,6 +58,9 @@ public class IncomeDAOImpl implements IncomeDAO {
 
     @Override
     public void saveIncome(IncomeWithItems incomeWithItems) {
+        if (incomeWithItems.getIncome().getReference() == null) {
+            incomeWithItems.getIncome().setReference(makeReference(LocalDateTime.now()));
+        }
         Income income = repository.save(incomeWithItems.getIncome());
 
         for (Item item : incomeWithItems.getItems()) {
@@ -66,6 +72,16 @@ public class IncomeDAOImpl implements IncomeDAO {
     @Override
     public void deleteIncome(int id) {
 
+    }
+
+    private String makeReference(LocalDateTime time) {
+        ReferenceGenerator rg = new ReferenceGenerator();
+
+        if (reference == 1000) reference = 0;
+        rg.setReference(reference);
+        ++reference;
+
+        return rg.generateReferenceNumber(time, "I");
     }
 
 }

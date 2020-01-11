@@ -49,7 +49,7 @@ public class OrderController {
 
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<OrderWithItems> getById(@PathVariable int id) {
-        return new ResponseEntity<>(orderDAO.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(orderDAO.getByIdWithItems(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/save")
