@@ -39,7 +39,9 @@ public class ItemDAOImpl implements ItemDAO {
         for (Product product : products) {
             ItemCollection ic = new ItemCollection();
             ic.setProduct(product);
-            ic.setTotal(repository.sumUpByProduct(product.getId()));
+            Long sum = repository.sumUpByProduct(product.getId());
+            if (sum == null) continue;
+            ic.setTotal(sum);
 
             collections.add(ic);
         }

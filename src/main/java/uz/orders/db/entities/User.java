@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import uz.orders.db.entities.base.UpdateBaseEntity;
 
 import javax.persistence.Column;
@@ -21,12 +22,15 @@ public class User extends UpdateBaseEntity {
     @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = "firstName")
+    @Nullable
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Nullable
+    @Column(name = "last_name")
     private String lastName;
 
+    @Nullable
     @Column(name = "market_id")
     private int marketId;
 
