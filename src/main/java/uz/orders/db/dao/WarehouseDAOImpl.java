@@ -18,7 +18,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 
     @Override
     public List<Warehouse> getAll() {
-        return repository.findAll();
+        return repository.findAllByDeletedFalse();
     }
 
     @Override
