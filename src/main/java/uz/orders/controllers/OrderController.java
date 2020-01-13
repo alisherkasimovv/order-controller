@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
+@CrossOrigin("http://localhost:3000")
 public class OrderController {
 
     private OrderDAO orderDAO;
@@ -42,7 +43,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/get/markets")
-    public ResponseEntity<List<MarketWithOrders>> getOrdersForSpecificMarket(@PathVariable int marketId) {
+    public ResponseEntity<List<MarketWithOrders>> getOrdersForSpecificMarket() {
         return new ResponseEntity<>(orderDAO.getAllOrdersForMarket(), HttpStatus.OK);
     }
 

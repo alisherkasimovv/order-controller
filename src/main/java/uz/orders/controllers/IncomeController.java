@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/incomes")
+@CrossOrigin("http://localhost:3000")
 public class IncomeController {
     
     private IncomeDAO incomeDAO;

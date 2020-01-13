@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/outgoes")
+@CrossOrigin("http://localhost:3000")
 public class OutgoController {
 
     private OutgoDAO outgoDAO;
