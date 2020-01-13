@@ -35,7 +35,6 @@ public class WarehouseDAOImpl implements WarehouseDAO {
     public String createWarehouse(int productId) {
         Warehouse warehouse = repository.findByProductId(productId);
         if (warehouse == null) {
-            warehouse = new Warehouse();
             warehouse.setProductId(productId);
             warehouse.setQuantity(0);
         }
