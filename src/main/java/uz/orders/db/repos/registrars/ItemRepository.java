@@ -38,7 +38,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
      */
     List<Item> findAllByOrderTrue();
 
-    @Query("SELECT SUM(i.orderQuantity) FROM Item i WHERE i.productId = ?1 AND i.deleted = FALSE AND i.provided = FALSE")
+    @Query("SELECT SUM(i.orderQuantity) FROM Item i WHERE i.productId = ?1 AND i.orderQuantity > 0 AND i.deleted = FALSE AND i.provided = FALSE")
     Long sumUpByProduct(int productId);
 
     /**
