@@ -71,7 +71,7 @@ public class OutgoDAOImpl implements OutgoDAO {
         orderDAO.saveOnlyOrder(order);
 
         for (Item item : orderWithItems.getItems()) {
-            item.setDocumentId(outgo.getId());
+            item.setDocumentId(order.getId());
             itemDAO.saveItem(item, DocumentType.ORDER);
 
             item.setDocumentId(savedOutgo.getId());
