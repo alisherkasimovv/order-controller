@@ -18,12 +18,10 @@ public class ItemDAOImpl implements ItemDAO {
 
     private ItemRepository repository;
     private WarehouseDAO warehouseDAO;
-    private ProductDAO productDAO;
 
-    public ItemDAOImpl(ItemRepository repository, WarehouseDAO warehouseDAO, ProductDAO productDAO) {
+    public ItemDAOImpl(ItemRepository repository, WarehouseDAO warehouseDAO) {
         this.repository = repository;
         this.warehouseDAO = warehouseDAO;
-        this.productDAO = productDAO;
     }
 
     @Override
@@ -32,26 +30,9 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public List<ItemCollection> sumUpAllItemQuantities() {
-        List<Product> products = productDAO.get();
-        List<ItemCollection> collections = new ArrayList<>();
-
-        for (Product product : products) {
-            ItemCollection ic = new ItemCollection();
-            ic.setProduct(product);
-            Long sum = repository.sumUpByProduct(product.getId());
-            if (sum == null) continue;
-            ic.setTotal(sum);
-
-            collections.add(ic);
-        }
-
-        return collections;
-    }
-
-    @Override
     public void saveItem(Item item, DocumentType type) {
         if (type == DocumentType.ORDER){
+            warehouseDAO.makeOrderToWarehouse(item.getProductId(), item.getOrderQuantity());
             // ORDER SAVE
             item.setOrder(true);
             item.setIncome(false);
@@ -61,15 +42,11 @@ public class ItemDAOImpl implements ItemDAO {
             item.setIncomeCost(0);
             item.setOutgoQuantity(0);
         } else if (type == DocumentType.INCOME) {
+            warehouseDAO.makeIncomeToWarehouse(item.getProductId(), item.getIncomeQuantity());
             // INCOME SAVE
             item.setOrder(false);
             item.setIncome(true);
             item.setOutgo(false);
-
-            warehouseDAO.saveWarehouse(
-                    item.getProductId(),
-                    item.getIncomeQuantity()
-            );
 
         } else if (type == DocumentType.OUTGO) {
             // OUTGO SAVE

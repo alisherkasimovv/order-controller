@@ -13,6 +13,6 @@ import uz.orders.db.entities.Product;
 public class ItemCollection {
 
     private Product product;
-    private Long total;
+    private double total;
 
 }

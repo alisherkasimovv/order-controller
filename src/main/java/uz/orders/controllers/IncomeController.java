@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import uz.orders.collections.Filter;
 import uz.orders.collections.ItemCollection;
 import uz.orders.collections.components.IncomeWithItems;
+import uz.orders.db.dao.interfaces.ProductDAO;
 import uz.orders.db.dao.interfaces.registrars.IncomeDAO;
-import uz.orders.db.dao.interfaces.registrars.ItemDAO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,11 +18,11 @@ import java.util.List;
 public class IncomeController {
     
     private IncomeDAO incomeDAO;
-    private ItemDAO itemDAO;
+    private ProductDAO productDAO;
 
-    public IncomeController(IncomeDAO incomeDAO, ItemDAO itemDAO) {
+    public IncomeController(IncomeDAO incomeDAO, ProductDAO productDAO) {
         this.incomeDAO = incomeDAO;
-        this.itemDAO = itemDAO;
+        this.productDAO = productDAO;
     }
     
     @GetMapping(value = "/get")
@@ -43,6 +43,6 @@ public class IncomeController {
     @PostMapping(value = "/save")
     public ResponseEntity<List<ItemCollection>> getById(@Valid @RequestBody IncomeWithItems income) {
         incomeDAO.saveIncome(income);
-        return new ResponseEntity<>(itemDAO.sumUpAllItemQuantities(), HttpStatus.OK);
+        return new ResponseEntity<>(productDAO.sumUpAllOrderQuantities(), HttpStatus.OK);
     }
 }

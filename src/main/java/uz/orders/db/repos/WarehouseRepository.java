@@ -1,8 +1,9 @@
 package uz.orders.db.repos;
 
-import com.sun.tools.javac.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import uz.orders.db.entities.Warehouse;
+
+import java.util.List;
 
 public interface WarehouseRepository extends JpaRepository<Warehouse, Integer> {
 

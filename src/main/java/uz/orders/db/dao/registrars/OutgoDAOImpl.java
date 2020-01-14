@@ -66,16 +66,16 @@ public class OutgoDAOImpl implements OutgoDAO {
         Outgo savedOutgo = repository.save(outgo);
 
         int id = orderWithItems.getOrder().getId();
-        Order order = orderDAO.getById(id);
-        order.setProvided(orderWithItems.getOrder().isProvided());
-        orderDAO.saveOnlyOrder(order);
+        Order closingOrder = orderDAO.getById(id);
+        closingOrder.setProvided(orderWithItems.getOrder().isProvided());
+        orderDAO.saveOnlyOrder(closingOrder);
 
         for (Item item : orderWithItems.getItems()) {
-            item.setDocumentId(order.getId());
-            itemDAO.saveItem(item, DocumentType.ORDER);
-
             item.setDocumentId(savedOutgo.getId());
             itemDAO.saveItem(item, DocumentType.OUTGO);
+
+            item.setDocumentId(closingOrder.getId());
+            itemDAO.saveItem(item, DocumentType.ORDER);
         }
     }
 

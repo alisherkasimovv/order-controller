@@ -20,13 +20,11 @@ import java.util.List;
 @CrossOrigin("http://localhost:3000")
 public class ProductController {
     private ProductDAO productDAO;
-    private ItemDAO itemDAO;
     private WarehouseDAO warehouseDAO;
 
     @Autowired
-    public ProductController(ProductDAO productDAO, ItemDAO itemDAO, WarehouseDAO warehouseDAO) {
+    public ProductController(ProductDAO productDAO, WarehouseDAO warehouseDAO) {
         this.productDAO = productDAO;
-        this.itemDAO = itemDAO;
         this.warehouseDAO = warehouseDAO;
     }
 
@@ -42,7 +40,7 @@ public class ProductController {
 
     @GetMapping(value = "/get/order-quantities")
     public ResponseEntity<List<ItemCollection>> getSummedItems() {
-        return new ResponseEntity<>(itemDAO.sumUpAllItemQuantities(), HttpStatus.OK);
+        return new ResponseEntity<>(productDAO.sumUpAllOrderQuantities(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/get/warehouse")
