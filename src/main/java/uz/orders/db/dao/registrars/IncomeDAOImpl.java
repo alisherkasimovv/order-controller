@@ -64,6 +64,7 @@ public class IncomeDAOImpl implements IncomeDAO {
         Income income = repository.save(incomeWithItems.getIncome());
 
         for (Item item : incomeWithItems.getItems()) {
+            if (item == null) continue;
             item.setDocumentId(income.getId());
             itemDAO.saveItem(item, DocumentType.INCOME);
         }
