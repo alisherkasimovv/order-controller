@@ -2,6 +2,7 @@ package uz.orders.db.dao;
 
 import org.springframework.stereotype.Service;
 import uz.orders.collections.ItemCollection;
+import uz.orders.collections.WarehouseWithProduct;
 import uz.orders.db.dao.interfaces.ProductDAO;
 import uz.orders.db.dao.interfaces.WarehouseDAO;
 import uz.orders.db.entities.Product;
@@ -23,13 +24,24 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> get() {
-        return repository.findAllByDeletedFalse();
+    public List<WarehouseWithProduct> get() {
+        List<WarehouseWithProduct> wwp = new ArrayList<>();
+        List<Product> products = repository.findAllByDeletedFalse();
+
+        for (Product product : products) {
+            WarehouseWithProduct wpr = new WarehouseWithProduct();
+            wpr.setProduct(product);
+            wpr.setWarehouse(warehouseDAO.getByProductId(product.getId()));
+
+            wwp.add(wpr);
+        }
+
+        return wwp;
     }
 
     @Override
     public List<ItemCollection> sumUpAllOrderQuantities() {
-        List<Product> products = this.get();
+        List<Product> products = repository.findAllByDeletedFalse();
         List<ItemCollection> collections = new ArrayList<>();
 
         for (Product product : products) {

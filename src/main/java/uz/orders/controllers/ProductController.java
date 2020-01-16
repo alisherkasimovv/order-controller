@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import uz.orders.collections.ItemCollection;
+import uz.orders.collections.WarehouseWithProduct;
 import uz.orders.db.dao.interfaces.ProductDAO;
 import uz.orders.db.dao.interfaces.WarehouseDAO;
 import uz.orders.db.dao.interfaces.registrars.ItemDAO;
@@ -29,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/get")
-    public ResponseEntity<List<Product>>getAllProducts(){
+    public ResponseEntity<List<WarehouseWithProduct>>getAllProducts(){
         return new ResponseEntity<>(productDAO.get(), HttpStatus.OK);
     }
 
@@ -55,7 +56,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<List<Product>>saveProduct(@Valid @RequestBody Product product){
+    public ResponseEntity<List<WarehouseWithProduct>>saveProduct(@Valid @RequestBody Product product){
         productDAO.saveProduct(product);
         return new ResponseEntity<>(productDAO.get(),HttpStatus.OK);
     }
